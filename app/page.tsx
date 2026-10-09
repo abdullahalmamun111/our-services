@@ -1,69 +1,164 @@
-import Image from "next/image";
+"use client";
+
+import React, { useState, useEffect } from "react";
+import Navbar from "@/components/Navbar";
+import MagicCursor from "@/components/MagicCursor";
+import Hero from "@/components/Hero";
+import QuickHighlights from "@/components/QuickHighlights";
+import SolutionSwitch from "@/components/SolutionSwitch";
+import DailyOperationsPillars from "@/components/DailyOperationsPillars";
+import ModulesShowcase from "@/components/ModulesShowcase";
+import InstitutionTypes from "@/components/InstitutionTypes";
+import InteractiveCalculator from "@/components/InteractiveCalculator";
+import ComparisonTable from "@/components/ComparisonTable";
+import TestimonialsAndTrust from "@/components/TestimonialsAndTrust";
+import FAQSection from "@/components/FAQSection";
+import Footer from "@/components/Footer";
+import DemoModal from "@/components/DemoModal";
+import { Language } from "@/lib/translations";
+import { MessageSquare, ArrowUp } from "lucide-react";
 
 export default function Home() {
+  const [lang, setLang] = useState<Language>("bn");
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
+  const [preselectedModule, setPreselectedModule] = useState<string | undefined>();
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  // Initialize theme and language on mount
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("eduverse_theme") as "dark" | "light" | null;
+    const initialTheme = savedTheme || "dark";
+    setTheme(initialTheme);
+    if (initialTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+
+    const savedLang = localStorage.getItem("eduverse_lang") as Language | null;
+    if (savedLang) {
+      setLang(savedLang);
+    }
+
+    const handleScroll = () => {
+      if (window.scrollY > 400) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    localStorage.setItem("eduverse_theme", newTheme);
+    if (newTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
+
+  const handleSetLang = (newLang: Language) => {
+    setLang(newLang);
+    localStorage.setItem("eduverse_lang", newLang);
+  };
+
+  const handleOpenDemo = (moduleName?: string) => {
+    setPreselectedModule(moduleName);
+    setDemoModalOpen(true);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <div className={`min-h-screen selection:bg-cyan-500 selection:text-white transition-colors duration-300 relative ${theme === 'dark' ? 'bg-[#070b14] text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
+      {/* Magic Cursor Aura Effect */}
+      <MagicCursor />
+
+      {/* Main Glass Navigation Bar */}
+      <Navbar
+        lang={lang}
+        setLang={handleSetLang}
+        theme={theme}
+        toggleTheme={toggleTheme}
+        onOpenDemo={() => handleOpenDemo()}
+      />
+
+      <main>
+        {/* Hero Section with Live Interactive Preview */}
+        <Hero lang={lang} onOpenDemo={() => handleOpenDemo()} />
+
+        {/* 4 Pillars Bar (Edumoy style) */}
+        <QuickHighlights lang={lang} />
+
+        {/* CoachingPro vs SchoolPro Dual Solution Switcher */}
+        <SolutionSwitch lang={lang} onOpenDemo={handleOpenDemo} />
+
+        {/* 4 Daily Operations That Matter Most (EduPilot360 style) */}
+        <DailyOperationsPillars lang={lang} onOpenDemo={() => handleOpenDemo()} />
+
+        {/* 18 Integrated Enterprise Modules with search & category filters */}
+        <ModulesShowcase lang={lang} onOpenDemo={handleOpenDemo} />
+
+        {/* One Platform for Every Institution Type */}
+        <InstitutionTypes lang={lang} onOpenDemo={handleOpenDemo} />
+
+        {/* Interactive Efficiency & ROI Calculator */}
+        <InteractiveCalculator lang={lang} onOpenDemo={() => handleOpenDemo()} />
+
+        {/* Side-by-side Comparison Matrix */}
+        <ComparisonTable lang={lang} />
+
+        {/* Testimonials & Bangladeshi Ecosystem Trust */}
+        <TestimonialsAndTrust lang={lang} />
+
+        {/* FAQ Section */}
+        <FAQSection lang={lang} />
       </main>
+
+      {/* Comprehensive Footer */}
+      <Footer lang={lang} onOpenDemo={() => handleOpenDemo()} />
+
+      {/* Interactive Free Demo Booking Modal */}
+      <DemoModal
+        isOpen={demoModalOpen}
+        onClose={() => setDemoModalOpen(false)}
+        lang={lang}
+        preselectedModule={preselectedModule}
+      />
+
+      {/* Floating Action Buttons (WhatsApp & Scroll Top) */}
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end gap-2.5">
+        <a
+          href="https://wa.me/8801986054016"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Direct WhatsApp Support"
+          className="w-11 h-11 sm:w-13 sm:h-13 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white p-2.5 sm:p-3.5 shadow-xl shadow-emerald-500/30 hover:scale-110 active:scale-95 transition-all flex items-center justify-center group relative"
+        >
+          <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6" />
+          <span className="absolute right-14 sm:right-16 top-1/2 -translate-y-1/2 px-3 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity shadow-lg">
+            {lang === "bn" ? "হোয়াটসঅ্যাপে কথা বলুন" : "Chat on WhatsApp"}
+          </span>
+        </a>
+
+        {showScrollTop && (
+          <button
+            onClick={scrollToTop}
+            aria-label="Scroll to top"
+            className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl glass-panel text-slate-700 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 border border-slate-200 dark:border-slate-800 shadow-lg flex items-center justify-center transition-all animate-in fade-in"
+          >
+            <ArrowUp className="w-4 h-4 sm:w-5 sm:h-5" />
+          </button>
+        )}
+      </div>
     </div>
   );
 }
