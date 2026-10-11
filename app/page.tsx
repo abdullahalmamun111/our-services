@@ -18,7 +18,7 @@ import { MessageSquare, ArrowUp } from "lucide-react";
 
 export default function Home() {
   const [lang, setLang] = useState<Language>("bn");
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">("light");
   const [demoModalOpen, setDemoModalOpen] = useState(false);
   const [preselectedModule, setPreselectedModule] = useState<
     string | undefined
@@ -29,7 +29,7 @@ export default function Home() {
   useEffect(() => {
     const savedTheme = (localStorage.getItem("edutavex_theme") ||
       localStorage.getItem("eduverse_theme")) as "dark" | "light" | null;
-    const initialTheme = savedTheme || "dark";
+    const initialTheme = savedTheme || "light";
     setTheme(initialTheme);
     if (initialTheme === "dark") {
       document.documentElement.classList.add("dark");
