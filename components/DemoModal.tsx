@@ -204,9 +204,9 @@ export default function DemoModal({
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-black text-sm shadow-xl shadow-cyan-600/30 transition-all flex items-center justify-center gap-2"
+                  className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-[#FBB034] to-[#F47F20] hover:from-[#F47F20] hover:to-[#D86B13] text-white font-black text-sm shadow-xl shadow-[#F47F20]/30 transition-all flex items-center justify-center gap-2"
                 >
-                  <Sparkles className="w-4 h-4 text-cyan-200" />
+                  <Sparkles className="w-4 h-4 text-white" />
                   <span>{t.demoModal.submitBtn}</span>
                 </button>
               </div>

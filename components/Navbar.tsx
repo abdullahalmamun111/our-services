@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { translations, Language } from "@/lib/translations";
-import { Sun, Moon, Sparkles, Menu, X, GraduationCap } from "lucide-react";
+import { Sun, Moon, Sparkles, Menu, X, School } from "lucide-react";
 
 interface NavbarProps {
   lang: Language;
@@ -23,40 +24,31 @@ export default function Navbar({
   const t = translations[lang];
 
   return (
-    <header className="sticky top-0 z-40 w-full glass-panel border-b border-slate-200/80 dark:border-slate-800/80 backdrop-blur-xl transition-colors duration-300">
+    <header className="sticky top-0 z-40 w-full bg-white/65 dark:bg-[#0A111C]/65 backdrop-blur-2xl border-b border-white/50 dark:border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.4)] transition-all duration-300">
       <div className="max-w-7xl mx-auto px-2 min-[360px]:px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-1 sm:gap-2">
-        {/* Logo - ALWAYS visible on every screen */}
+        {/* Logo - Vertical EDUTAVEX Logo */}
         <a
-          href="#"
-          className="flex items-center gap-1.5 min-[360px]:gap-2 group focus:outline-none shrink-0"
+          href="/"
+          className="flex items-center group focus:outline-none shrink-0 py-1"
         >
-          <div className="w-8 h-8 min-[360px]:w-9 min-[360px]:h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-cyan-600 via-sky-500 to-blue-600 p-[2px] shadow-lg shadow-cyan-500/20 group-hover:shadow-cyan-500/40 transition-all duration-300">
-            <div className="w-full h-full bg-white dark:bg-slate-900 rounded-[10px] sm:rounded-[14px] flex items-center justify-center">
-              <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-600 dark:text-cyan-400 group-hover:scale-110 transition-transform" />
-            </div>
-          </div>
-          <div className="flex flex-col">
-            <div className="flex items-center gap-1">
-              <span className="text-sm min-[360px]:text-base sm:text-xl font-extrabold tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-200 bg-clip-text text-transparent">
-                Eduta
-              </span>
-              <span className="text-sm min-[360px]:text-base sm:text-xl font-extrabold text-cyan-500">
-                Vex
-              </span>
-              <span className="px-1 py-0.2 text-[8px] sm:text-[9px] font-bold uppercase rounded-md bg-cyan-100 dark:bg-cyan-950/80 text-cyan-700 dark:text-cyan-300 border border-cyan-300/40 dark:border-cyan-700/40 hidden sm:inline">
-                OS
-              </span>
-            </div>
-            <p className="text-[10px] sm:text-[11px] font-medium text-slate-500 dark:text-slate-400 tracking-wider hidden sm:block">
-              {lang === "bn"
-                ? "স্মার্ট ক্যাম্পাস ম্যানেজমেন্ট"
-                : "Next-Gen Campus Suite"}
-            </p>
-          </div>
+          <Image
+            src="/edutavex-logo-vertical-trimmed.png"
+            alt="EDUTAVEX"
+            width={64}
+            height={64}
+            priority
+            className="h-11 sm:h-14 w-auto object-contain transition-transform group-hover:scale-105 duration-200 drop-shadow-xs"
+          />
         </a>
 
         {/* Desktop Navigation Links — only xl+ */}
-        <nav className="hidden xl:flex items-center gap-5 text-sm font-semibold text-slate-600 dark:text-slate-300 flex-1 justify-center">
+        <nav className="hidden xl:flex items-center gap-5 text-sm font-semibold text-[#1F2A37] dark:text-[#F3F4F6] flex-1 justify-center">
+          <a
+            href="/"
+            className="hover:text-[#2A9AD8] transition-colors whitespace-nowrap text-[#1B5E9B] dark:text-[#2A9AD8] font-bold"
+          >
+            {lang === "bn" ? "← মূল পাতা" : "← Home"}
+          </a>
           <a
             href="#packages"
             className="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors whitespace-nowrap"
@@ -131,9 +123,9 @@ export default function Navbar({
           {/* Free Demo Button — desktop */}
           <button
             onClick={onOpenDemo}
-            className="hidden md:flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white text-xs sm:text-sm font-bold shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 active:scale-95 transition-all duration-200"
+            className="hidden md:flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-[#FBB034] to-[#F47F20] hover:from-[#F47F20] hover:to-[#D86B13] text-white text-xs sm:text-sm font-bold shadow-lg shadow-[#F47F20]/25 hover:shadow-[#F47F20]/40 active:scale-95 transition-all duration-200"
           >
-            <Sparkles className="w-3.5 h-3.5 text-cyan-200 animate-pulse" />
+            <Sparkles className="w-3.5 h-3.5 text-white animate-pulse" />
             <span>{t.nav.bookDemo}</span>
           </button>
 
@@ -165,6 +157,7 @@ export default function Navbar({
         <div className="xl:hidden border-t border-slate-200 dark:border-slate-800 bg-white/98 dark:bg-slate-950/98 backdrop-blur-2xl px-5 py-5 space-y-4">
           <div className="flex flex-col gap-0.5 font-semibold text-slate-700 dark:text-slate-200 text-base">
             {[
+              { href: "/", label: lang === "bn" ? "← মূল পাতা" : "← Home" },
               { href: "#packages", label: t.nav.solutions },
               { href: "#highlights", label: t.nav.features },
               { href: "#modules", label: t.nav.modules },

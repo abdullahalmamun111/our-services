@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   keywords: [
     "School Management Software Bangladesh",
     "Coaching Management System",
-    "EduPilot",
-    "Edumoy",
+    "EdutaVex",
+    "EdutaVex Cloud OS",
     "Biometric Attendance School",
     "Result Processing Software",
     "bKash Fee Collection",
